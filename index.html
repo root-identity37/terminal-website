@@ -4,52 +4,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROOT IDENTITY | TERMINAL</title>
+<title>ROOT IDENTITY | SYSTEM</title>
 <style>
 *{box-sizing:border-box}
 body{
-  margin:0;background:#000;color:#00ff41;
-  font-family:monospace;padding:25px;
+ margin:0;background:#020503;color:#00ff41;
+ font-family:Consolas,monospace;
+ min-height:100vh;padding:20px;
+ display:flex;align-items:center;justify-content:center;
+ overflow-x:hidden;
+}
+body:after{
+ content:"";position:fixed;inset:0;pointer-events:none;
+ background:repeating-linear-gradient(
+ transparent 0px,transparent 3px,
+ rgba(0,255,65,.035) 4px);
+ z-index:5;
 }
 .container{
-  max-width:700px;margin:50px auto;
-  border:1px solid #00ff4155;
-  padding:25px;border-radius:12px;
-  box-shadow:0 0 20px #00ff4120;
+ width:100%;max-width:720px;
+ border:1px solid #00ff4160;
+ background:#030a05;
+ padding:25px;border-radius:10px;
+ box-shadow:0 0 25px #00ff4125;
 }
-h1{color:#00ff41;text-shadow:0 0 12px #00ff41}
-.line{margin:18px 0;color:#00ff41}
-a{
-  display:block;margin:15px 0;padding:14px;
-  border:1px solid #00ff41;color:#00ff41;
-  text-decoration:none;border-radius:6px;
+.header{
+ border-bottom:1px solid #00ff4150;
+ padding-bottom:15px;margin-bottom:25px;
 }
-a:hover{background:#00ff41;color:#000}
-.cursor{animation:blink 1s infinite}
+h1{
+ font-size:27px;letter-spacing:3px;
+ text-shadow:0 0 12px #00ff41;
+}
+.status{font-size:12px;color:#8aff9d}
+.dot{
+ display:inline-block;width:8px;height:8px;
+ background:#00ff41;border-radius:50%;
+ box-shadow:0 0 10px #00ff41;margin-right:7px;
+}
+.line{margin:20px 0;line-height:1.8}
+.prompt{color:#8aff9d}
+#typing{min-height:100px;line-height:1.8}
+.cursor{animation:blink .8s infinite}
 @keyframes blink{50%{opacity:0}}
+.buttons{margin-top:30px}
+a{
+ display:block;text-decoration:none;
+ color:#00ff41;border:1px solid #00ff41;
+ padding:15px;margin:13px 0;
+ transition:.3s;text-align:center;
+ letter-spacing:2px;
+}
+a:hover{
+ background:#00ff41;color:#000;
+ box-shadow:0 0 20px #00ff41;
+}
+.footer{
+ margin-top:30px;padding-top:15px;
+ border-top:1px solid #00ff4130;
+ color:#548b60;font-size:11px;
+ text-align:center;
+}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>ROOT_IDENTITY<span class="cursor">_</span></h1>
-<div class="line">[ SYSTEM ONLINE ]</div>
-<p>Welcome to my digital terminal.</p>
-<p>Identity: UNKNOWN</p>
-<p>Status: ACTIVE</p>
-<hr style="border-color:#00ff4155">
-<div class="line">root@identity:~$ whoami</div>
-<p>Just another entity in cyberspace.</p>
-<div class="line">root@identity:~$ connect</div>
 
-<a href="https://www.facebook.com/profile.php?id=61552527391230" target="_blank">
-[ FACEBOOK ]
-</a>
+ <div class="header">
+  <h1>ROOT_IDENTITY<span class="cursor">_</span></h1>
+  <div class="status">
+   <span class="dot"></span>SYSTEM ONLINE
+  </div>
+ </div>
 
-<a href="https://github.com/root-identity37" target="_blank">
-[ GITHUB ]
-</a>
+ <div class="line">
+  <span class="prompt">root@identity</span>:~$ ./initialize
+ </div>
 
-<div class="line">root@identity:~$ exit<span class="cursor">_</span></div>
+ <div id="typing"></div>
+
+ <div class="line">
+  <span class="prompt">root@identity</span>:~$ connect --social
+ </div>
+
+ <div class="buttons">
+  <a href="https://www.facebook.com/profile.php?id=61552527391230" target="_blank" rel="noopener">
+   [ FACEBOOK ]
+  </a>
+  <a href="https://github.com/root-identity37" target="_blank" rel="noopener">
+   [ GITHUB ]
+  </a>
+ </div>
+
+ <div class="line">
+  <span class="prompt">root@identity</span>:~$ exit<span class="cursor">_</span>
+ </div>
+
+ <div class="footer">
+  ROOT IDENTITY © 2026<br>
+  ALL SYSTEMS OPERATIONAL
+ </div>
 </div>
+
+<script>
+const messages=[
+ "> Initializing digital identity...",
+ "> Loading encrypted interface...",
+ "> Establishing secure connection...",
+ "> Identity: UNKNOWN",
+ "> Status: ONLINE",
+ "> Welcome to my digital world."
+];
+
+let i=0;
+const output=document.getElementById("typing");
+
+function typeLine(){
+ if(i>=messages.length)return;
+ let line=messages[i];
+ let j=0;
+ const p=document.createElement("div");
+ output.appendChild(p);
+
+ const timer=setInterval(()=>{
+  p.textContent=line.substring(0,++j);
+  if(j>=line.length){
+   clearInterval(timer);
+   i++;
+   setTimeout(typeLine,350);
+  }
+ },35);
+}
+typeLine();
+</script>
 </body>
 </html>
